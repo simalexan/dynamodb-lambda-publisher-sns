@@ -1,0 +1,17 @@
+{
+  "name": "dynamodb-lambda-publisher-sns",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "package": "aws cloudformation package --template-file template.yaml --output-template-file output.yaml --s3-bucket dynamodb-lambda-publisher-sns-bucket",
+    "deploy": "aws cloudformation deploy --template-file output.yaml --stack-name dynamodb-lambda-publisher-sns --capabilities CAPABILITY_IAM --parameter-overrides TableName=$npm_package_config_table_name",
+    "qd": "npm run package && npm run deploy"
+  },
+  "config": {
+    "table_name": "randomTable"
+  },
+  "keywords": [],
+  "author": "Aleksandar Simovic <alexander.simovic@gmail.com>",
+  "license": "MIT"
+}
