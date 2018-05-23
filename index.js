@@ -5,8 +5,8 @@ const parseDynamoDBEvent = require('./parse-dynamodb-event');
 const TOPIC_ARN = process.env.TOPIC_ARN;
 
 exports.handler = (event) => {
-    let dbEvent = parseDynamoDBEvent(event);
-    return saveToSNS(dbEvent);
+    let dbEntries = parseDynamoDBEvent(event);
+    return Promise.all(dbEntries.map(saveToSNS));
 };
 
 saveToSNS = (data) => {
