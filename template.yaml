@@ -15,23 +15,21 @@ Resources:
     Properties:
       TableName: !Ref TableName
       AttributeDefinitions:
-        -
-          AttributeName: !Sub ${TableName}Id
+        - AttributeName: !Sub ${TableName}Id
           AttributeType: S
       KeySchema:
-        -
-          AttributeName: !Sub ${TableName}Id
+        - AttributeName: !Sub ${TableName}Id
           KeyType: HASH
-      ProvisionedThroughput:
-        ReadCapacityUnits: 1
-        WriteCapacityUnits: 1
+      BillingMode: PAY_PER_REQUEST
+      SSESpecification:
+        SSEEnabled: True
       StreamSpecification:
-        StreamViewType: NEW_AND_OLD_IMAGES
+        StreamViewType: NEW_IMAGE
   LambdaSubscriber:
     Type: AWS::Serverless::Function
     Properties:
       Handler: index.handler
-      Runtime: nodejs8.10
+      Runtime: nodejs12.x
       Environment:
         Variables:
           TOPIC_ARN: !Ref SNSTopic
